@@ -105,7 +105,7 @@ class output_kml(threading.Thread):
         retstr +=  """\t<Folder>\n\t\t<name>Aircraft locations</name>\n\t\t<open>0</open>"""
 
         #read the database and add KML
-        q = "select distinct icao from positions where seen > datetime('now', '-5 minute')"
+        q = "select distinct icao from positions where seen > datetime('now', '-24 hour')"
         c = self._db.cursor()
         self.locked_execute(c, q)
         icaolist = c.fetchall()
@@ -113,7 +113,7 @@ class output_kml(threading.Thread):
 
         for icao in icaolist:
             #print "ICAO: %x" % icao
-            q = "select * from positions where icao=%i and seen > datetime('now', '-2 hour') ORDER BY seen DESC" % icao
+            q = "select * from positions where icao=%i and seen > datetime('now', '-24 hour') ORDER BY seen DESC" % icao
             self.locked_execute(c, q)
             track = c.fetchall()
             #print "Track length: %i" % len(track)
@@ -188,7 +188,7 @@ class output_jsonp(output_kml):
 #        retstr +=  """\t<Folder>\n\t\t<name>Aircraft locations</name>\n\t\t<open>0</open>"""
 
         #read the database and add KML
-        q = "select distinct icao from positions where seen > datetime('now', '-1 minute')"
+        q = "select distinct icao from positions where seen > datetime('now', '-24 hour')"
         c = self._db.cursor()
         self.locked_execute(c, q)
         icaolist = c.fetchall()
