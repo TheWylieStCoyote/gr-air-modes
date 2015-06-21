@@ -23,6 +23,7 @@ from gnuradio.eng_option import eng_option
 from gnuradio.gr.pubsub import pubsub
 from optparse import OptionParser
 import time, os, sys, threading, math
+import sys
 from string import split, join
 import air_modes
 from air_modes.types import *
@@ -50,7 +51,9 @@ def main():
                        help="open an SBS-1-compatible server on port 30003")
   optparser.add_option("-m","--multiplayer", type="string", default=None,
                        help="FlightGear server to send aircraft data, in format host:port")
-
+  optparser.add_option("-L","--log", type="string", default=None,
+                       help="filename for output log")
+ 
   (options, args) = optparser.parse_args()
 
   #construct the radio
@@ -77,6 +80,9 @@ def main():
 
   if options.no_print is not True:
     printer = air_modes.output_print(cpr_dec, publisher)
+
+  if options.log is not None:
+    sys.stdout = open(options.log, 'w')
 
   if options.multiplayer is not None:
     [fghost, fgport] = options.multiplayer.split(':')
