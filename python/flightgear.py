@@ -145,7 +145,7 @@ class fg_posmsg(fg_header):
             self.model = 'Aircraft/santa/Models/santa.xml'
         else:
             self.model = modelmap[self.modelname]
-            
+
         self.lat = lat
         self.lon = lon
         self.alt = alt
@@ -172,7 +172,7 @@ class fg_posmsg(fg_header):
         #get it in angle/axis representation
         (angle, axis) = ecefquat._get_angle_axis()
         orientation = angle * axis
-        
+
         kts_to_ms = 0.514444444 #convert kts to m/s
         vel_ms = self.vel * kts_to_ms
         velvec = (vel_ms,0,0) #velocity vector in m/s -- is this in the local frame? looks like [0] is fwd vel,
@@ -194,7 +194,7 @@ class fg_posmsg(fg_header):
                                 0)
 
         return fg_header.pack(self) + self.data
-        
+
 
 if __name__ == '__main__':
     timeoffset = time.time()

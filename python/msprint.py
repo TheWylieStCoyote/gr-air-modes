@@ -1,23 +1,23 @@
 #
 # Copyright 2010, 2012 Nick Foster
-# 
+#
 # This file is part of gr-air-modes
-# 
+#
 # gr-air-modes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # gr-air-modes is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with gr-air-modes; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
 
 import time, os, sys
 from string import split, join
@@ -35,7 +35,7 @@ class output_print:
     self._fns = [int(l[6:]) for l in dir(self) if l.startswith("handle")]
     for i in self._fns:
       publisher.subscribe("type%i_dl" % i, getattr(self, "handle%i" % i))
-    
+
     publisher.subscribe("modes_dl", self.catch_nohandler)
 
   @staticmethod
@@ -57,7 +57,7 @@ class output_print:
       else:
         retstr += " from %.6x" % msg.data["aa"]
       self._print(retstr)
-      
+
   def handle0(self, msg):
     try:
       retstr = output_print.prefix(msg)
@@ -105,7 +105,7 @@ class output_print:
     try:
       retstr = output_print.prefix(msg)
       retstr += "Type 4 (short surveillance altitude reply) from %x at %ift" % (msg.ecc, air_modes.decode_alt(msg.data["ac"], True))
-      retstr += output_print.fs_text(msg.data["fs"])    
+      retstr += output_print.fs_text(msg.data["fs"])
     except ADSBError:
       return
     self._print(retstr)

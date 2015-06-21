@@ -1,18 +1,18 @@
 #
 # Copyright 2010, 2012 Nick Foster
-# 
+#
 # This file is part of gr-air-modes
-# 
+#
 # gr-air-modes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # gr-air-modes is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with gr-air-modes; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
@@ -150,7 +150,7 @@ class me_reply(data_field):
       return 0x61
     else:
       return NoHandlerError(ftc)
-    
+
   def get_numbits(self):
     return 56
 
@@ -233,11 +233,11 @@ class modes_reply(data_field):
 
 #unscramble mode A/C-style squawk codes for type 5 replies below
 def decode_id(id):
-  
+
   C1 = 0x1000
   A1 = 0x0800
   C2 = 0x0400
-  A2 = 0x0200	#this represents the order in which the bits come
+  A2 = 0x0200    #this represents the order in which the bits come
   C4 = 0x0100
   A4 = 0x0080
   B1 = 0x0020
@@ -246,12 +246,12 @@ def decode_id(id):
   D2 = 0x0004
   B4 = 0x0002
   D4 = 0x0001
-  
+
   a = ((id & A1) >> 11) + ((id & A2) >> 8) + ((id & A4) >> 5)
   b = ((id & B1) >> 5)  + ((id & B2) >> 2) + ((id & B4) << 1)
   c = ((id & C1) >> 12) + ((id & C2) >> 9) + ((id & C4) >> 6)
   d = ((id & D1) >> 2)  + ((id & D2) >> 1) + ((id & D4) << 2)
-   
+
   return (a * 1000) + (b * 100) + (c * 10) + d
 
 #decode ident squawks
@@ -306,7 +306,7 @@ def parseBDS09_0(data):
   ns = bool(data["dns"])
   ew_vel = data["vew"] - 1
   ew = bool(data["dew"])
-    
+
   velocity = math.hypot(ns_vel, ew_vel)
   if ew:
     ew_vel = 0 - ew_vel
@@ -366,7 +366,7 @@ def parseBDS09_3(data):
       vert_spd = 0 - vert_spd
   geo_diff = float(data["hd"] - 1) * 25
   return [mag_hdg, vel_src, vel, vert_spd, geo_diff]
-      
+
 
 def parseBDS62(data):
   eps_strings = ["NO EMERGENCY", "GENERAL EMERGENCY", "LIFEGUARD/MEDICAL", "FUEL EMERGENCY",

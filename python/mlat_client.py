@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 #
 # Copyright 2012 Nick Foster
-# 
+#
 # This file is part of gr-air-modes
-# 
+#
 # gr-air-modes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # gr-air-modes is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with gr-air-modes; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
@@ -36,7 +36,7 @@ class client_info:
         self.position = []
         self.offset_secs = 0
         self.offset_frac_secs = 0.0
-        self.time_source = None  
+        self.time_source = None
 
 class mlat_client:
     def __init__(self, queue, position, server_addr, time_source):

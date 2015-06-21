@@ -1,23 +1,23 @@
 #
 # Copyright 2010 Nick Foster
-# 
+#
 # This file is part of gr-air-modes
-# 
+#
 # gr-air-modes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # gr-air-modes is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with gr-air-modes; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
 # Boston, MA 02110-1301, USA.
-# 
+#
 
 import sqlite3
 import string, math, threading, time
@@ -98,7 +98,7 @@ class output_kml(threading.Thread):
 
         if self.my_coords is not None:
             retstr += """\n\t<Folder>\n\t\t<name>Range rings</name>\n\t\t<open>0</open>"""
-            for rng in [100, 200, 300]:     
+            for rng in [100, 200, 300]:
                 retstr += """\n\t\t<Placemark>\n\t\t\t<name>%inm</name>\n\t\t\t<styleUrl>#rangering</styleUrl>\n\t\t\t<LinearRing>\n\t\t\t\t<coordinates>%s</coordinates>\n\t\t\t</LinearRing>\n\t\t</Placemark>""" % (rng, self.draw_circle(self.my_coords, rng),)
             retstr += """\t</Folder>\n"""
 
@@ -204,7 +204,7 @@ class output_jsonp(output_kml):
             if len(r) != 0:
                 ident = r[0][0]
                 actype = r[0][1]
-            else: 
+            else:
                 ident=""
                 actype = ""
             if ident is None: ident = ""

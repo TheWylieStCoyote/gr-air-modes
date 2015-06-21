@@ -14,7 +14,7 @@ if __name__== '__main__':
 
     #get dupes
     dupes = sorted([icao for icao in set(icaos) if icaos.count(icao) > 1])
-    for icao in dupes:        
+    for icao in dupes:
         print "%x" % icao
     print "Found non-unique replies from %i aircraft" % len(dupes)
 

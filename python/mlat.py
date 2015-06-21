@@ -38,7 +38,7 @@ wgs84_geoid = numpy.array([[13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,13,1
                [-53,-54,-55,-52,-48,-42,-38,-38,-29,-26,-26,-24,-23,-21,-19,-16,-12,-8,-4,-1,1,4,4,6,5,4,2,-6,-15,-24,-33,-40,-48,-50,-53,-52],     #80S
                [-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30,-30]], #90S
                dtype=numpy.float)
-               
+
 #ok this calculates the geoid offset from the reference ellipsoid
 #combined with LLH->ECEF this gets you XYZ for a ground-referenced point
 def wgs84_height(lat, lon):
@@ -63,10 +63,10 @@ def ecef2llh((x,y,z)):
     lat = math.atan2(z+ep**2*wgs84_b*math.sin(th)**3, p-wgs84_e2*wgs84_a*math.cos(th)**3)
     N   = wgs84_a / math.sqrt(1-wgs84_e2*math.sin(lat)**2)
     alt = p / math.cos(lat) - N
-    
+
     lon *= (180. / math.pi)
     lat *= (180. / math.pi)
-    
+
     return [lat, lon, alt]
 
 #convert lat/lon/alt coords to ECEF without geoid correction, WGS84 model
@@ -74,15 +74,15 @@ def ecef2llh((x,y,z)):
 def llh2ecef((lat, lon, alt)):
     lat *= (math.pi / 180.0)
     lon *= (math.pi / 180.0)
-    
+
     n = lambda x: wgs84_a / math.sqrt(1 - wgs84_e2*(math.sin(x)**2))
-    
+
     x = (n(lat) + alt)*math.cos(lat)*math.cos(lon)
     y = (n(lat) + alt)*math.cos(lat)*math.sin(lon)
     z = (n(lat)*(1-wgs84_e2)+alt)*math.sin(lat)
-    
+
     return [x,y,z]
-    
+
 #do both of the above to get a geoid-corrected x,y,z position
 def llh2geoid((lat, lon, alt)):
     (x,y,z) = llh2ecef((lat, lon, alt + wgs84_height(lat, lon)))
@@ -128,7 +128,7 @@ def mlat(replies, altitude):
     me_llh = stations[0]
     me = llh2geoid(stations[0])
 
-    
+
     #list of stations in XYZ relative to me
     rel_stations = [numpy.array(llh2geoid(station)) - numpy.array(me) for station in stations[1:]]
     rel_stations.append([0,0,0] - numpy.array(me))
@@ -148,10 +148,10 @@ def mlat(replies, altitude):
     #xguess = [0,0,0]
     #start our guess directly overhead, who cares
     xguess = numpy.array(llh2ecef([me_llh[0], me_llh[1], altitude])) - numpy.array(me)
-    
+
     xyzpos = mlat_iter(rel_stations, prange_obs, xguess)
     llhpos = ecef2llh(xyzpos+me)
-    
+
     #now, we could return llhpos right now and be done with it.
     #but the assumption we made above, namely that the aircraft is directly above the
     #nearest station, results in significant error due to the oblateness of the Earth's geometry.
@@ -169,7 +169,7 @@ def mlat(replies, altitude):
 #    numpy.append(avec, [[-1],[-1],[-1],[-1]], 1) #must be # of stations
 #    doparray = numpy.linalg.inv(avec.T*avec)
 #the diagonal elements of doparray will be the x, y, z DOPs.
-    
+
     return llhpos
 
 
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     testalt      = 8000
     testplane    = numpy.array(llh2ecef([37.617175,-122.400843, testalt]))
     testme       = llh2geoid(teststations[0])
-    teststamps   = [10, 
+    teststamps   = [10,
                     10 + numpy.linalg.norm(testplane-numpy.array(llh2geoid(teststations[1]))) / c,
                     10 + numpy.linalg.norm(testplane-numpy.array(llh2geoid(teststations[2]))) / c,
                     10 + numpy.linalg.norm(testplane-numpy.array(llh2geoid(teststations[3]))) / c,

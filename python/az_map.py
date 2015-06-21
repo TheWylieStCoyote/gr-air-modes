@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 #
 # Copyright 2012 Nick Foster
-# 
+#
 # This file is part of gr-air-modes
-# 
+#
 # gr-air-modes is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3, or (at your option)
 # any later version.
-# 
+#
 # gr-air-modes is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with gr-air-modes; see the file COPYING.  If not, write to
 # the Free Software Foundation, Inc., 51 Franklin Street,
@@ -129,7 +129,7 @@ class az_map(QtGui.QWidget):
             for alt in range(0, self._model.columnCount()):
                 path = QtGui.QPainterPath()
                 for i in range(az_map_model.npoints-1,-1,-1):
-                    #bearing is to start point of arc (clockwise) 
+                    #bearing is to start point of arc (clockwise)
                     bearing = (i+0.5) * 360./az_map_model.npoints
                     distance = self._model._data[i][alt]
                     radius = min(self.width(), self.height()) / 2.0
@@ -160,7 +160,7 @@ class az_map(QtGui.QWidget):
         rangestep = 100
         while self.get_range() / rangestep < 3:
             rangestep /= 2.0
-        for i in np.arange(rangestep, self.get_range(), rangestep): 
+        for i in np.arange(rangestep, self.get_range(), rangestep):
             diameter = (float(i) / self.get_range()) * min(self.width(), self.height())
             painter.setPen(az_map.ringpen)
             painter.drawEllipse(QtCore.QRectF(-diameter / 2.0,
@@ -223,7 +223,7 @@ class model_updater(threading.Thread):
                 for alt in self.model._altitudes:
                     self.model.addRecord(i*360./az_map_model.npoints, alt, random.randint(0,az_map.maxrange)*alt / max(self.model._altitudes))
         self.done = True
-        
+
 class Window(QtGui.QWidget):
     def __init__(self):
         super(Window, self).__init__()
