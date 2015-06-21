@@ -40,7 +40,7 @@ class output_print:
 
   @staticmethod
   def prefix(msg):
-    return "(%i %.8f) " % (msg.rssi, msg.timestamp)
+    return "(%i %.8f, %f) " % (msg.rssi, msg.timestamp, time.time())
 
   def _print(self, msg):
     if self._callback is None:
